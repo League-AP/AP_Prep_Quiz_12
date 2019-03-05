@@ -1,209 +1,360 @@
+<html>
 <head>
-  <h1 align="center">QUIZ</h1>
-</head>
+            <title>League AP Prep - Quiz 12</title>
 
-<body onload="startup()" style="background-color:#bbccdd;font-weight:bold;font-size:22px;">
-  <pre style="white-space:pre-wrap;"><code>
-  <div id="docBody"style="overflow:visible;"></div>
-</code></pre>
-</body>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://league-central.github.io/curriculum/style/style.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+        <style>
+            #quiz {
+                margin-left:50px;
+            }
+            #nav {
+                margin-left:50px;
+                position: relative;
+            }
+            #footer {
+                position: absolute;
+                bottom: -100;
+                width: 100%;
+            }
+            button {background-color:yellow; border-radius: 3px; font-size: 125%;
+            }
+            code {font-size: 125%; color: forestgreen}
+        </style>
+        <script src="https://league-central.github.io/curriculum/script/headerAndFooter.js"></script>
+</head>
+<div id="header">
+	<center> <h1>
+		Practice Quiz - Weeek 12
+	</h1>    <br>
+    <hr>
+    <br></center>
+</div>
+<div id="quiz"></div>
+<div id="nav">
+    <div id="footer"></div>
+</div>
 
 <script>
-  function Question(){
-    this.question = "";
-    this.choices = [];
-    this.correctAnswer = "";
-    this.userAnswer = "";
-    this.visited = false;
-  }
-  
-  var body;
-  
-  var questions = [];
-  
-  var currentQuestion;
+
+var totalQuestions;
+
+var qDiv;
+var navDiv;
+
+var currentQuestion;
+var questions = [];
+var qIndex = 0;
+
+var quizComplete = false;
+var score = 0;
+
+function Question(){
+	this.type;
+	this.number;
+	this.question;
+	this.choices = [];
+	this.correctAnswers = [];
+	this.userAnswers = [];
+	this.isCorrect = false;
+}
+
+window.onload = function(){
+	qDiv = document.getElementById('quiz');
+	navDiv = document.getElementById('nav');
+	buildQuiz();
+
+	navDiv.innerHTML += "NAVIGATION:<br>";
+	for(var i = 0; i < totalQuestions; i++){
+		navDiv.innerHTML += "<button onclick='navigateTo("+i+")'>"+(i + 1)+"</button>";
+	}
+	navDiv.innerHTML += "<br><br>";
+	navDiv.innerHTML += "<button onclick='submitQuiz()'>Submit Quiz</button><br>";
+
+    addFooter();
+}
+
+function buildQuiz(){
+// These constants map answer indexes to letters shown on UI
+const A = 0;
+const B = 1;
+const C = 2;
+const D = 3;
+const E = 4;
+
+
+questions[qIndex] = new Question();
+questions[qIndex].number=qIndex+1;
+      questions[qIndex].type="SING_ANS";
+questions[qIndex].question = "The method <code>recur</code> is shown below. In which case will recur terminate without error?<br><br><code>public void recur (String str)<br>{<br>&nbsp;&nbsp;&nbsp;if (str.length() &lt; 15)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.print(&quot;s&quot;);<br><br>&nbsp;&nbsp;&nbsp;recur(str + &quot;!&quot;);<br>}</code><br>";
+questions[qIndex].choices[0] = "&nbsp;&nbsp;&nbsp;When the length of <code>str</code> is less than 15";
+questions[qIndex].choices[1] = "&nbsp;&nbsp;&nbsp;When the length of <code>str</code> is greater than or equal to 15";
+questions[qIndex].choices[2] = "&nbsp;&nbsp;&nbsp;When the length of <code>str</code> is equal to 0";
+questions[qIndex].choices[3] = "&nbsp;&nbsp;&nbsp;For all string inputs";
+questions[qIndex].choices[4] = "&nbsp;&nbsp;&nbsp;For no string inputs";
+questions[qIndex].correctAnswers = E;
+
+qIndex=qIndex+1;      
+questions[qIndex] = new Question();
+questions[qIndex].number=qIndex+1;
+      questions[qIndex].type="SING_ANS";
+questions[qIndex].question = "Consider the <code>Fruit</code>, <code>Grape</code>, and <code>SeedlessGrape</code> classes shown below. Which of the following object declarations will compile without error?<br><br><code>public abstract class Fruit<br>{<br>&nbsp;&nbsp;&nbsp;private String name;<br>&nbsp;&nbsp;&nbsp;private boolean seeds;<br><br>&nbsp;&nbsp;&nbsp;public Fruit(String theName)<br>&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name = theName;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;seeds = true;<br>&nbsp;&nbsp;&nbsp;}<br><br>    public void setSeeds()<br>&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;seeds = !seeds;<br>&nbsp;&nbsp;&nbsp;}<br><br>}<br><br>public class Grape extends Fruit<br>{<br>&nbsp;&nbsp;&nbsp;private String color;<br><br>&nbsp;&nbsp;&nbsp;public Grape(String theName, String theColor)<br>&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super(theName);<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color = theColor;<br>&nbsp;&nbsp;&nbsp;}<br>}<br><br>public class SeedlessGrape extends Grape<br>{<br>&nbsp;&nbsp;&nbsp;public SeedlessGrape(String theName, String theColor)<br>&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super(theName, theColor);<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setSeeds();<br>&nbsp;&nbsp;&nbsp;}<br>}</code><br><br>I.&nbsp;&nbsp;&nbsp;<code>Fruit a = new SeedlessGrape(&quot;grape&quot;, &quot;red&quot;);</code><br>II.&nbsp;&nbsp;&nbsp;<code>Grape b = new Grape(&quot;grape&quot;);</code><br>III.&nbsp;&nbsp;&nbsp;<code>SeedlessGrape c = new Grape(&quot;grape&quot;, &quot;green&quot;);</code><br>IV.&nbsp;&nbsp;&nbsp;<code>Fruit d = new Fruit(&quot;strawberry&quot;);</code><br>";
+questions[qIndex].choices[0] = "&nbsp;&nbsp;&nbsp;I only";
+questions[qIndex].choices[1] = "&nbsp;&nbsp;&nbsp;II only";
+questions[qIndex].choices[2] = "&nbsp;&nbsp;&nbsp;III only";
+questions[qIndex].choices[3] = "&nbsp;&nbsp;&nbsp;IV only";
+questions[qIndex].choices[4] = "&nbsp;&nbsp;&nbsp;I and IV only";
+questions[qIndex].correctAnswers = A;
+
+ qIndex=qIndex+1;        
+
+questions[qIndex] = new Question();
+questions[qIndex].number=qIndex+1;
+      questions[qIndex].type="SING_ANS";
+questions[qIndex].question = "The method <code>printNames</code> is located below. It prints out all the names in a 2-D matrix. Which of the following correctly replaces /* to be determined */ to make the method work as intended?<br><br><code>public void printNames (String[][] arr)<br>{<br>   &nbsp;&nbsp;&nbsp;for (String[] row : arr)<br>&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (String x : row)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/* to be determined */<br>         }<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println();<br>&nbsp;&nbsp;&nbsp;}<br>}</code><br>";
+questions[qIndex].choices[0] = "&nbsp;&nbsp;&nbsp;<code>System.out.print(arr[x] + &quot; &quot;);</code>";
+questions[qIndex].choices[1] = "&nbsp;&nbsp;&nbsp;<code>System.out.print(x + &quot; &quot;);</code>";
+questions[qIndex].choices[2] = "&nbsp;&nbsp;&nbsp;<code>System.out.print(x.toString() + &quot; &quot;);</code>";
+questions[qIndex].choices[3] = "&nbsp;&nbsp;&nbsp;<code>System.out.print(row[x] + &quot; &quot;);</code>";
+questions[qIndex].choices[4] = "&nbsp;&nbsp;&nbsp;<code>System.out.print(row.get(x) + &quot; &quot;);</code>";
+questions[qIndex].correctAnswers = B;
+
     
-  function startup(){
-    currentQuestion = 0;
+   qIndex=qIndex+1;      
+questions[qIndex] = new Question();
+questions[qIndex].number=qIndex+1;
+      questions[qIndex].type="SING_ANS";
+questions[qIndex].question = "Which of the following is equivalent to <code>!((x &gt; 10) &amp;&amp; (x &lt;= 5))</code>?<br> ";
+questions[qIndex].choices[0] = "&nbsp;&nbsp;&nbsp;<code>(x &lt; 10) &amp;&amp; (x &gt; 5)</code>";
+questions[qIndex].choices[1] = "&nbsp;&nbsp;&nbsp;<code>(x &gt; 10) &amp;&amp; (x &lt;=5)</code>";
+questions[qIndex].choices[2] = "&nbsp;&nbsp;&nbsp;<code>(x &lt;= 10) &amp;&amp; (x &gt; 5)</code>";
+questions[qIndex].choices[3] = "&nbsp;&nbsp;&nbsp;<code>(x &lt;= 10) || (x &gt; 5)</code>";
+questions[qIndex].choices[4] = "&nbsp;&nbsp;&nbsp;<code>(x &gt; 10) || (x &lt;= 5)</code>";
+questions[qIndex].correctAnswers = D;
+
+
+   qIndex=qIndex+1;        
+questions[qIndex] = new Question();
+questions[qIndex].number=qIndex+1;
+      questions[qIndex].type="SING_ANS";
+questions[qIndex].question = "Consider the method mystery. What is returned as a result of mystery(4)?<br><br><code>public int mystery (int num)<br>{<br>&nbsp;&nbsp;&nbsp;if (num == 1)<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 3;<br>&nbsp;&nbsp;&nbsp;else<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 3 * mystery (num - 1);<br>}</code>";
+questions[qIndex].choices[0] = "&nbsp;&nbsp;&nbsp;12";
+questions[qIndex].choices[1] = "&nbsp;&nbsp;&nbsp;243";
+questions[qIndex].choices[2] = "&nbsp;&nbsp;&nbsp;81";
+questions[qIndex].choices[3] = "&nbsp;&nbsp;&nbsp;15";
+questions[qIndex].choices[4] = "&nbsp;&nbsp;&nbsp;27";
+questions[qIndex].correctAnswers = C;
+ 
     
-    body = document.getElementById("docBody");
-    
-questions[0] = new Question();
-questions[0].question = "The method recur is shown below. In which case will recur terminate without error?\n\npublic void recur (String str)\n{\n     if (str.length() < 15)\n         System.out.print(\"s\");\n\n     recur(str + \"!\");\n}\n";
-questions[0].choices[0] = "When the length of str is less than 15";
-questions[0].choices[1] = "When the length of str is greater than or equal to 15";
-questions[0].choices[2] = "When the length of str is equal to 0";
-questions[0].choices[3] = "For all string inputs";
-questions[0].choices[4] = "For no string inputs";
-questions[0].correctAnswer = 4;
-questions[1] = new Question();
-questions[1].question = "Consider the Fruit, Grape, and SeedlessGrape classes shown below. Which of the following object declarations will compile without error?\n\npublic abstract class Fruit\n{\n    private String name;\n    private boolean seeds;\n\n    public Fruit(String theName)\n    {\n        name = theName;\n        seeds = true;\n    }\n\n    public void setSeeds()\n    {\n        seeds = !seeds;\n    }\n\n}\n\npublic class Grape extends Fruit\n{\n    private String color;\n\n    public Grape(String theName, String theColor)\n    {\n        super(theName);\n        color = theColor;\n    }\n}\n\npublic class SeedlessGrape extends Grape\n{\n    public SeedlessGrape(String theName, String theColor)\n    {\n        super(theName, theColor);\n        setSeeds();\n    }\n}\n\nI. Fruit a = new SeedlessGrape(\"grape\", \"red\");\nII. Grape b = new Grape(\"grape\");\nIII. SeedlessGrape c = new Grape(\"grape\", \"green\");\nIV. Fruit d = new Fruit(\"strawberry\");";
-questions[1].choices[0] = "I only";
-questions[1].choices[1] = "II only";
-questions[1].choices[2] = "III only";
-questions[1].choices[3] = "IV only";
-questions[1].choices[4] = "I and IV only";
-questions[1].correctAnswer = 0;
-questions[2] = new Question();
-questions[2].question = "The method printNames is located below. It prints out all the names in a 2-D matrix. Which of the following correctly replaces /* to be determined */ to make the method work as intended?\n\npublic void printNames (String[][] arr)\n{\n     for (String[] row : arr)\n     {\n         for (String x : row)\n         {\n             /* to be determined */\n         }\n\n         System.out.println();\n     }\n}";
-questions[2].choices[0] = "System.out.print(arr[x] + \" \");";
-questions[2].choices[1] = "System.out.print(x + \" \");";
-questions[2].choices[2] = "System.out.print(x.toString() + \" \");";
-questions[2].choices[3] = "System.out.print(row[x] + \" \");";
-questions[2].choices[4] = "System.out.print(row.get(x) + \" \");";
-questions[2].correctAnswer = 1;
-questions[3] = new Question();
-questions[3].question = "Which of the following is equivalent to ! ( (x > 10) && (x <= 5) )? ";
-questions[3].choices[0] = "(x < 10) && (x > 5)";
-questions[3].choices[1] = "(x > 10) && (x <=5)";
-questions[3].choices[2] = "(x <= 10) && (x > 5)";
-questions[3].choices[3] = "(x <= 10) || (x > 5)";
-questions[3].choices[4] = "(x > 10) || (x <= 5)";
-questions[3].correctAnswer = 3;
-questions[4] = new Question();
-questions[4].question = "Consider the method mystery. What is returned as a result of mystery(4)?\n\npublic int mystery (int num)\n{\n    if (num == 1)\n        return 3;\n    else\n        return 3 * mystery (num - 1);\n}";
-questions[4].choices[0] = "12";
-questions[4].choices[1] = "243";
-questions[4].choices[2] = "81";
-questions[4].choices[3] = "15";
-questions[4].choices[4] = "27";
-questions[4].correctAnswer = 2;
-    
-    setDivText(questions[0]);
-    setButtons(questions[0]);
-  }
-  
-  function setDivText(q){
-    body.innerHTML += currentQuestion + 1 + ".<br>";
-    body.innerHTML += q.question + "<br><br><hr size=\"1\">";
-    
-    if(q.choices.length == 0){
-      body.innerHTML += "<br><textarea id=\"answer\" rows=\"10\" cols=\"80\">" +
-                         q.userAnswer + "</textarea><br>"; 
-    }else{
-      for(var i = 0; i < q.choices.length; i++){
-        if(i == q.userAnswer && q.visited){
-          body.innerHTML += convertChar(i) + "<input type=\"radio\" checked=\"true\"name=\"answer\" id=\"" + i + "\">" +q.choices[i] + "</input><br><br>";
-        }else{
-          body.innerHTML += "<input type=\"radio\" name=\"answer\" id=\"" + i + "\"><br>" +q.choices[i] + "</input><br><hr size=\"1\">";
-        }
-      }
-      
-      q.visited = true;
+	totalQuestions = qIndex+1;
+	currentQuestion = questions[0];
+	displayQuestion();
+}
+
+function displayQuestion(){
+	qDiv.innerHTML = "Question " + currentQuestion.number + ":<br><br>";
+	qDiv.innerHTML += currentQuestion.question + "<br>";
+	if(currentQuestion.type == "MULT_ANS"){
+		qDiv.innerHTML += "<br>	(choose all that apply)<br>";
+
+		for(var i = 0; i < currentQuestion.choices.length; i++){
+            qDiv.innerHTML += "&nbsp;" + numToChar(i) + ":&nbsp;&nbsp;";
+			if(currentQuestion.userAnswers.includes(i)){
+				qDiv.innerHTML += "<input type='checkbox' checked></input>";
+			}else{
+				qDiv.innerHTML += "<input type='checkbox'></input>";
+			}
+
+
+			qDiv.innerHTML += currentQuestion.choices[i] + "<br>";
+
+		}
+
+		if(quizComplete){
+			qDiv.innerHTML += "<b>Correct Answer:</b><br>";
+			for(var j = 0; j < currentQuestion.correctAnswers.length; j++){
+				qDiv.innerHTML += currentQuestion.choices[currentQuestion.correctAnswers[j]] + "<br><br>";
+			}
+			qDiv.innerHTML += "<b>Your Answer:</b><br>";
+			for(var j = 0; j < currentQuestion.userAnswers.length; j++){
+				qDiv.innerHTML += currentQuestion.choices[currentQuestion.userAnswers[j]] + "<br><br>";
+			}
+		}
+
+	}else if(currentQuestion.type == "SING_ANS"){
+
+		for(var i = 0; i < currentQuestion.choices.length; i++){
+			qDiv.innerHTML += numToChar(i) + ":&nbsp;&nbsp;";
+
+			if(currentQuestion.userAnswers == i){
+				qDiv.innerHTML += "<input type='radio' name='q"+currentQuestion.number+"' checked></input>";
+			}else{
+				qDiv.innerHTML += "<input type='radio' name='q"+currentQuestion.number+"'></input>";
+			}
+			qDiv.innerHTML += currentQuestion.choices[i] + "<br>";
+
+		}
+
+		if(quizComplete){
+			qDiv.innerHTML += "<b>Correct Answer:</b><br>";
+			qDiv.innerHTML += currentQuestion.choices[currentQuestion.correctAnswers] + "<br><br>";
+
+			qDiv.innerHTML += "<b>Your Answer:</b><br>";
+			qDiv.innerHTML += currentQuestion.choices[currentQuestion.userAnswers] + "<br><br>";
+		}
+	}else if(currentQuestion.type == "FILL_IN"){
+		qDiv.innerHTML += "<textarea rows='7' cols='60'>"+currentQuestion.userAnswers+"</textarea>";
+		if(quizComplete){
+			qDiv.innerHTML += "<br><b>Correct Answer:</b><br>";
+			qDiv.innerHTML += currentQuestion.correctAnswers + "<br><br>";
+
+			qDiv.innerHTML += "<b>Your Answer:</b><br>";
+			qDiv.innerHTML += currentQuestion.userAnswers + "<br><br>";
+		}
+	}
+	qDiv.innerHTML += "<br>";
+
+	if(currentQuestion.number != 1){
+		qDiv.innerHTML += "<button onclick='previousQuestion()'>Previous Question</button>";
+	}
+    if (currentQuestion.number >1 && currentQuestion.number < questions.length) {
+        qDiv.innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;"
     }
-  }
-  
-  function convertChar(a){
-    switch(a){
-        case 0: 
-        case "0": return "A";
-        case 1: 
-        case "1": return "B";
-        case 2: 
-        case "2": return "C";
-        case 3: 
-        case "3": return "D";
-        case 4: 
-        case "4": return "E";
-    }
-  }
-  
-  function setButtons(q){
-    if(q == questions[0]){
-      if(questions.length > 1){
-        body.innerHTML += "<button onclick=\"nextQuestion()\">NEXT</button>";
-      }else{
-        body.innerHTML += "<button onclick=\"submit()\">SUBMIT</button>";
-      }
-    } 
-    else if(q == questions[questions.length - 1]){
-      body.innerHTML += "<button onclick=\"previousQuestion()\">PREVIOUS</button>";
-      body.innerHTML += "<button onclick=\"submit()\">SUBMIT</button>";
-    }else{
-      body.innerHTML += "<button onclick=\"previousQuestion()\">PREVIOUS</button>";
-      body.innerHTML += "<button onclick=\"nextQuestion()\">NEXT</button>";
-    }
-  }
-  
-  function nextQuestion(){
-    if(setUserAnswer()){
-      body.innerHTML = "";
-    	currentQuestion++;
-    	setDivText(questions[currentQuestion]);
-    	setButtons(questions[currentQuestion]);
-    }
-  }
-  
-  function previousQuestion(){
-    if(setUserAnswer()){
-      body.innerHTML = "";
-    	currentQuestion--;
-    	setDivText(questions[currentQuestion]);
-    	setButtons(questions[currentQuestion]);
-    }
-  }
-  
-  function setUserAnswer(){
-    var q = questions[currentQuestion];
-    
-    if(q.choices.length > 0){
-      try{
-     		q.userAnswer = document.querySelector('input[name="answer"]:checked').id;
-        return true;
-      }catch(err){
-        alert("Make a choice. You can come back and change it later.");
-        return false;
-      }
-    }else{
-      q.userAnswer = document.getElementById("answer").value.trim();
-      return true;
-    }
-  }
-  
-  function checkQuiz(){
-    var total = 0;
-    for(var i = 0; i < questions.length; i++){
-      var q = questions[i];
-      if(q.choices.length == 0){
-        if(q.userAnswer.trim() == q.correctAnswer){
-          total++;
-        }
-      } else {
-        if(q.correctAnswer == q.userAnswer){
-          total++;
-        }
-      }
-    }
-    return total;
-  }
-  
-  function reloadPage(){
-    location = location;
-  }
-  
-  function submit(){
-    setUserAnswer();
-    
-    body.innerHTML = "You got " + checkQuiz() + " out of " + questions.length + " correct.<br><hr size=\"3\">";
-    for(var i = 0; i < questions.length; i++){
-      if(questions[i].choices.length > 0){
-        body.innerHTML += i + 1 + ". ";
-        body.innerHTML += questions[i].question + "<br><br>";
-        body.innerHTML += "Your Answer: <br>";
-        body.innerHTML += questions[i].choices[questions[i].userAnswer] + "<br>";
-        body.innerHTML += "Correct Answer: <br>";
-        body.innerHTML += questions[i].choices[questions[i].correctAnswer] + "<br>";
-        body.innerHTML += "<hr size=\"3\">";
-      }else{
-        body.innerHTML += i + 1 + ". ";
-        body.innerHTML += questions[i].question + "<br><br>";
-        body.innerHTML += "Your Answer: <br>";
-        body.innerHTML += questions[i].userAnswer + "<br>";
-        body.innerHTML += "Correct Answer: <br>";
-        body.innerHTML += questions[i].correctAnswer + "<br>";
-        body.innerHTML += "<hr size=\"3\">";
-      }
-    }
-            body.innerHTML += "<button onclick=\"reloadPage()\">START OVER</button>";
-  }
+    if(currentQuestion.number != questions.length){
+		qDiv.innerHTML += "<button onclick='nextQuestion()'>Next Question</button>";
+	}
+
+	qDiv.innerHTML += "<hr size='3'>";
+}
+
+function submitQuiz(){
+	if(quizComplete) return;
+	if(!confirm("Are you sure you want to submit your quiz for grading?")) return;
+	quizComplete = true;
+	saveQuestionState();
+
+	scoreQuiz();
+	highlightButtons();
+
+	currentQuestion = questions[0];
+	displayQuestion();
+}
+
+function specialParseStr(str){
+	var nstr = "";
+	for(var i = 0; i < str.length; i++){
+		var c = str.charAt(i);
+		if(c == '\"'){
+			nstr += "\\\"";
+		}else if(c == '<'){
+			nstr += "&lt";
+		}else if(c == '\n' || c == ' '){
+
+		}else{
+			nstr += c;
+		}
+	}
+	return nstr.trim();
+}
+
+function scoreQuiz(){
+	for(var i = 0; i < questions.length; i++){
+		if(questions[i].type == "MULT_ANS"){
+			var ca = compareArray(questions[i].correctAnswers, questions[i].userAnswers);
+			questions[i].isCorrect = ca;
+			if(ca) score++;
+		}else if(questions[i].type == "SING_ANS"){
+			if(questions[i].correctAnswers == questions[i].userAnswers){
+				questions[i].isCorrect = true;
+				score++;
+			}
+		}else if(questions[i].type == "FILL_IN"){
+			if(specialParseStr(questions[i].correctAnswers) == specialParseStr(questions[i].userAnswers)){
+				questions[i].isCorrect = true;
+				score++;
+			}
+		}
+	}
+
+	score /= totalQuestions;
+	score *= 100;
+
+	var hdr = document.getElementById("header");
+	hdr.innerHTML += "<center><h1><b>Score: "+score.toFixed(2)+"%</b></h1></center>";
+}
+
+function nextQuestion(){
+	saveQuestionState();
+	currentQuestion = questions[currentQuestion.number];
+	displayQuestion();
+}
+
+function previousQuestion(){
+	saveQuestionState();
+	currentQuestion = questions[currentQuestion.number - 2];
+	displayQuestion();
+}
+
+function navigateTo(i){
+	saveQuestionState();
+	currentQuestion = questions[i];
+	displayQuestion();
+}
+
+function highlightButtons(){
+	var btns = navDiv.getElementsByTagName("button");
+	for(var i = 0; i < questions.length; i++){
+		if(questions[i].isCorrect){
+			btns[i].style="background-color:green";
+		}else{
+			btns[i].style="background-color:red";
+		}
+	}
+}
+
+function saveQuestionState(){
+	if(currentQuestion.type == "MULT_ANS"){
+		currentQuestion.userAnswers = [];
+		var cbx = qDiv.getElementsByTagName("input");
+		for(var i = 0; i < cbx.length; i++){
+			if(cbx[i].checked){
+				currentQuestion.userAnswers.push(i);
+			}
+		}
+	}else if(currentQuestion.type == "SING_ANS"){
+		currentQuestion.userAnswers = [];
+		var cbx = qDiv.getElementsByTagName("input");
+		for(var i = 0; i < cbx.length; i++){
+			if(cbx[i].checked){
+				currentQuestion.userAnswers = i;
+			}
+		}
+	}else if(currentQuestion.type == "FILL_IN"){
+		var tbx = qDiv.getElementsByTagName("textarea");
+		currentQuestion.userAnswers = tbx[0].value;
+	}
+}
+
+function numToChar(num){
+	return String.fromCharCode("A".charCodeAt(0) + num);
+}
+
+function compareArray(arr1, arr2){
+	if(arr1.length != arr2.length){
+		return false;
+	}
+
+	for(var i = 0; i < arr1.length; i++){
+		if(arr1[i] != arr2[i]){
+			return false;
+		}
+	}
+
+	return true;
+}
+
 </script>
+
+</html>
